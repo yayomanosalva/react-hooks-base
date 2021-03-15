@@ -1,23 +1,85 @@
-import logo from './logo.svg';
-import './App.css';
+import Listadonombres from "./components/Listadonombres";
+import Props from './components/Props'
+import Cards from './components/Cards'
+
+import { BrowserRouter as Router, Switch, Link, Route } from 'react-router-dom'
 
 function App() {
+
+  const cards = [
+    {
+      imagen: "https://picsum.photos/id/237/200/300",
+      title: "Titulo de cards 1",
+      texto: "Texto de la cards 1"
+    },
+    {
+      imagen: "https://picsum.photos/200/300/?blur",
+      title: "Titulo de cards 2",
+      texto: "Texto de la cards 2"
+    },
+    {
+      imagen: "https://picsum.photos/200/300/?blur-2",
+      title: "Titulo de cards 3",
+      texto: "Texto de la cards 3"
+    },
+    {
+      imagen: "https://picsum.photos/seed/picsum/200/300",
+      title: "Titulo de cards 4",
+      texto: "Texto de la cards 4"
+    }
+  ]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+
+      <Router>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <Link className="navbar-brand" to="#">Navbar</Link>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div className="navbar-nav">
+
+              <Link className="nav-item nav-link active" to="/lista">lista <span className="sr-only">(current)</span></Link>
+              <Link className="nav-item nav-link" to="/bienvenido">bienvenido</Link>
+              <Link className="nav-item nav-link" to="/cards">cards</Link>
+            </div>
+          </div>
+        </nav>
+
+        <Switch>
+          <Route exact path="/lista">
+            <Listadonombres />
+          </Route>
+          <Route path="/bienvenido">
+            <Props nombre="jair" app="Manosalva" />
+            <Props nombre="mery" app="Manosalva" />
+            <Props nombre="hnan" app="Manosalva" />
+            <Props nombre="yes" app="Ferrer" />
+          </Route>
+          <Route exact path="/cards">
+            <div className="row">
+              {cards.map(item => <div className="col">
+                <Cards imagen={item.imagen} title={item.title} texto={item.texto}></Cards>
+              </div>)
+              }
+            </div>
+          </Route>
+        </Switch>
+      </Router>
+
+      {/* <Router>
+        <Link to="/inicio">Inicio</Link>
+        <Link to="/">Base</Link>
+        <Switch>
+          <Route exact path="/inicio/:id">
+            <inicio/>
+          </Route>
+          <Route path="/base">
+            <base/>
+          </Route>
+        </Switch>
+      </Router> */}
     </div>
   );
 }
